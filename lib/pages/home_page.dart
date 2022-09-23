@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization_v2/classes/language.dart';
+import 'package:flutter_localization_v2/classes/language_constants.dart';
+import 'package:flutter_localization_v2/main.dart';
 import 'package:flutter_localization_v2/router/route_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // TODO: Need to import language constants
 
 class HomePage extends StatefulWidget {
@@ -23,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title:  Text(translation(context).homePage),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -33,7 +36,11 @@ class _HomePageState extends State<HomePage> {
                 Icons.language,
                 color: Colors.white,
               ),
-              onChanged: (Language? language) {
+              onChanged: (Language? language) async{
+                if(language!=null){
+                  Locale _locale=await setLocale(language.languageCode);
+                  MyApp.setLocale(context, _locale);
+                }
                 // TODO: to call change language method
               },
               items: Language.languageList()
@@ -74,9 +81,9 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height / 4,
-            child: const Center(
+            child:  Center(
               child: Text(
-                "Personal Information",
+                AppLocalizations.of(context)!.personalInformation,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30,
@@ -88,14 +95,14 @@ class _HomePageState extends State<HomePage> {
           TextFormField(
             validator: (val) {
               if (val != null && val.isEmpty) {
-                return "Required Field";
+                return AppLocalizations.of(context)!.requiredField;
               }
               return null;
             },
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: "Name",
-              hintText: "Please enter name",
+              labelText: AppLocalizations.of(context)!.name,
+              hintText: AppLocalizations.of(context)!.nameHint,
             ),
           ),
           const SizedBox(
@@ -104,14 +111,14 @@ class _HomePageState extends State<HomePage> {
           TextFormField(
             validator: (val) {
               if (val != null && val.isEmpty) {
-                return "Required Field";
+                return AppLocalizations.of(context)!.requiredField;
               }
               return null;
             },
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: "Email",
-              hintText: "Please enter email",
+              labelText: AppLocalizations.of(context)!.email,
+              hintText: AppLocalizations.of(context)!.emailHint,
             ),
           ),
           const SizedBox(
@@ -120,7 +127,7 @@ class _HomePageState extends State<HomePage> {
           TextFormField(
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: "Date of Birth",
+              hintText: AppLocalizations.of(context)!.dateOfBirth,
             ),
             onTap: () async {
               FocusScope.of(context).requestFocus(FocusNode());
@@ -146,7 +153,7 @@ class _HomePageState extends State<HomePage> {
             color: Theme.of(context).primaryColor,
             child: Center(
               child: Text(
-                "Submit Info",
+                AppLocalizations.of(context)!.submitInfo,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
@@ -179,7 +186,7 @@ class _HomePageState extends State<HomePage> {
               size: 30,
             ),
             title: Text(
-              "About Us",
+              AppLocalizations.of(context)!.aboutUs,
               style: _textStyle,
             ),
             onTap: () {
@@ -196,7 +203,7 @@ class _HomePageState extends State<HomePage> {
               size: 30,
             ),
             title: Text(
-              "Settings",
+              AppLocalizations.of(context)!.settings,
               style: _textStyle,
             ),
             onTap: () {
