@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           TextFormField(
             validator: (val) {
